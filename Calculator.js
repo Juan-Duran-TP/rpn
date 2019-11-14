@@ -1,6 +1,11 @@
 class Calculator {
     constructor(value) {
+        if (typeof value === 'undefined') {
+            this.value = 0;
+        }
+        else {
         this.value = value;
+    }
     }
 
     equals(){
