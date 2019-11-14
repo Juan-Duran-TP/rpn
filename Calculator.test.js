@@ -117,24 +117,34 @@ describe('calculator', () => {
             const subject = new Calculator(5);
             expect(subject.rpn().rpn).toBeDefined();
         })
-        test("rpn recognizes addition",() => {
+        test("rpn performs addition",() => {
             const subject = new Calculator(5);
             expect(subject.rpn('8 2 +')).toEqual({value: 10});
         })
 
-        test("rpn recognizes subtraction",() => {
+        test("rpn performs subtraction",() => {
             const subject = new Calculator(5);
             expect(subject.rpn('8 2 -')).toEqual({value: 6});
         })
         
-        test("rpn recognizes multiplication",() => {
+        test("rpn performs multiplication",() => {
             const subject = new Calculator(5);
             expect(subject.rpn('8 2 *')).toEqual({value: 16});
         })
 
-        test("rpn recognizes division",() => {
+        test("rpn performs division",() => {
             const subject = new Calculator(5);
             expect(subject.rpn('8 2 /')).toEqual({value: 4});
+        })
+        
+        test("rpn recognizes negative values",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('8 -2 /')).toEqual({value: -4});
+        })        
+
+        test("rpn performs larger expressions",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('1 2 + 7 - 2 * 8 /')).toEqual({value: -1});
         })
     })
 
