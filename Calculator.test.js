@@ -2,6 +2,16 @@
 const Calculator = require('./Calculator.js')
 
 describe('calculator', () => {
+    test("if no initial value passed, value is assigned 0", () => {
+        const subject = new Calculator();
+        expect(subject.value).toBe(0);
+    })
+
+    test("Complete functionality cycle",() => {
+        const subject = new Calculator(5);
+        expect(subject.clear().add(3).subtract(1).multiply(6).divide(3).equals()).toBe(4);
+    })
+
     describe("equals", () => {
         test("has a getter on 'register' called equals",() => {
             const subject = new Calculator(5);
@@ -92,9 +102,40 @@ describe('calculator', () => {
         })
     })
 
-    test("Complete functionality cycle",() => {
-        const subject = new Calculator(5);
-        expect(subject.clear().add(3).subtract(1).multiply(6).divide(3).equals()).toBe(4);
+    describe('reverse polish notation', () => {
+        test("has an rpn function",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn).toBeDefined();
+        })
+
+        test("rpn changes register to 0 if nothing passed to rpn",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn()).toEqual({value: 0});
+        })
+
+        test("rpn can be chained",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn().rpn).toBeDefined();
+        })
+        test("rpn recognizes addition",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('8 2 +')).toEqual({value: 10});
+        })
+
+        test("rpn recognizes subtraction",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('8 2 -')).toEqual({value: 6});
+        })
+        
+        test("rpn recognizes multiplication",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('8 2 *')).toEqual({value: 16});
+        })
+
+        test("rpn recognizes division",() => {
+            const subject = new Calculator(5);
+            expect(subject.rpn('8 2 /')).toEqual({value: 4});
+        })
     })
 
 })
